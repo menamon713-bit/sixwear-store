@@ -4,259 +4,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SIX WEAR | Premium Streetwear</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-red: #ff073a;
-            --dark-bg: #050505;
-            --card-bg: #0d0d0d;
-            --gray-text: #888;
+            --bg-color: #f5f5f5;
+            --text-main: #111;
+            --text-muted: #666;
+            --accent-color: #111;
+            --marquee-bg: #ccff00;
+            --marquee-text: #000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark-bg); color: #fff; overflow-x: hidden; }
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; }
 
         /* =========================================
            Navbar
            ========================================= */
         .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: rgba(5, 5, 5, 0.9);
-            border-bottom: 1px solid #222;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 30px; background-color: var(--bg-color);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #ddd;
         }
-
-        .nav-left { display: flex; align-items: center; gap: 15px; }
-
-        .menu-btn {
-            background: transparent; border: none; color: #fff;
-            font-size: 24px; cursor: pointer; transition: 0.3s;
-        }
-        .menu-btn:hover { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); }
-
-        .logo { font-size: 22px; font-weight: 900; text-shadow: 0 0 10px var(--neon-red); }
-
-        .nav-right { display: flex; align-items: center; gap: 10px; }
-
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
+        .nav-links { display: none; gap: 20px; font-size: 14px; font-weight: 600; }
+        .nav-links a { text-decoration: none; color: var(--text-main); transition: 0.3s; }
+        .nav-links a:hover { color: var(--text-muted); }
+        .nav-icons { display: flex; align-items: center; gap: 15px; font-size: 20px; }
         .cart-btn {
-            background: transparent; color: #fff; border: 1px solid var(--neon-red);
-            padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;
-            font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.3s;
+            background: transparent; border: none; cursor: pointer;
+            font-size: 20px; position: relative; display: flex; align-items: center;
         }
-        .cart-btn:hover { background: rgba(255, 7, 58, 0.1); box-shadow: 0 0 10px var(--neon-red); }
-
         .cart-count {
-            background: var(--neon-red); color: white; border-radius: 50%;
-            padding: 2px 6px; font-size: 12px; font-weight: bold;
+            background: #e74c3c; color: white; font-size: 10px;
+            border-radius: 50%; padding: 2px 6px; position: absolute;
+            top: -5px; right: -10px; font-weight: bold;
         }
 
         /* =========================================
-           Sidebar Menu (القائمة الجانبية)
+           Hero
            ========================================= */
-        .sidebar-menu {
-            position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
-            background: #0a0a0a; border-left: 2px solid var(--neon-red);
-            z-index: 2000; transition: right 0.3s ease; display: flex; flex-direction: column;
-        }
-        .sidebar-menu.open { right: 0; }
-        .sidebar-header {
-            padding: 20px; border-bottom: 1px solid #222; display: flex;
-            justify-content: space-between; align-items: center;
-        }
-        .sidebar-header h2 { color: var(--neon-red); font-size: 20px; }
-        .close-menu { background: transparent; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-
-        .sidebar-links { list-style: none; padding: 20px; flex: 1; }
-        .sidebar-links li { margin-bottom: 20px; }
-        .sidebar-links a {
-            color: #ccc; text-decoration: none; font-size: 18px; transition: 0.3s;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .sidebar-links a:hover { color: var(--neon-red); padding-right: 10px; text-shadow: 0 0 10px var(--neon-red); }
+        .hero { text-align: center; padding: 50px 20px 30px; }
+        .hero h1 { font-size: 32px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
+        .hero p { font-size: 15px; color: var(--text-muted); max-width: 500px; margin: auto; }
 
         /* =========================================
-           Modal (النوافذ المنبثقة للسياسات)
+           Products Grid
            ========================================= */
-        .modal-overlay {
+        .main-content { padding: 20px 15px 80px; max-width: 1200px; margin: auto; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
+
+        .product-card {
+            background: #fff; border-radius: 8px; overflow: hidden;
+            cursor: pointer; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding-bottom: 15px;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        /* العلاقة */
+        .hanger-line { width: 2px; height: 20px; background: #ccc; margin: auto; }
+        .hanger-hook {
+            width: 10px; height: 10px; border: 2px solid #ccc;
+            border-bottom: none; border-radius: 10px 10px 0 0;
+            margin: -2px auto 0; display: block;
+        }
+
+        /* 🔴 التعديل هنا: إضافة حركة التمايل */
+        .product-image {
+            width: 90%; height: 220px; object-fit: contain;
+            margin: 10px auto; display: block;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1));
+            /* بنخلي نقطة الارتكاز من فوق عشان تتمايل زي العلاقة */
+            transform-origin: top center; 
+        }
+
+        /* كلاس التمايل اللي هيشتغل بالجافاسكريبت */
+        .product-image.swing {
+            animation: swing 0.8s ease-in-out;
+        }
+
+        @keyframes swing {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(15deg); }
+            40% { transform: rotate(-10deg); }
+            60% { transform: rotate(5deg); }
+            80% { transform: rotate(-3deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .product-info { text-align: center; padding: 0 15px; }
+        .product-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+        .price { font-size: 13px; color: var(--text-muted); font-weight: bold; }
+
+        /* =========================================
+           Marquee
+           ========================================= */
+        .marquee-container {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: var(--marquee-bg); color: var(--marquee-text);
+            padding: 10px 0; overflow: hidden; z-index: 999;
+            font-weight: 800; font-size: 14px; letter-spacing: 1px;
+        }
+        .marquee-content { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* =========================================
+           Product Modal
+           ========================================= */
+        .product-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0,0,0,0.8); z-index: 3000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
-            opacity: 0; transition: opacity 0.3s;
+            background: #fff; z-index: 2000; display: none; flex-direction: column;
+            overflow-y: auto;
         }
-        .modal-overlay.open { display: flex; opacity: 1; }
-        
-        .modal-content {
-            background: #111; border: 1px solid var(--neon-red); border-radius: 10px;
-            padding: 25px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;
-            position: relative; box-shadow: 0 0 30px rgba(255, 7, 58, 0.2);
+        .product-modal.open { display: flex; }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; border-bottom: 1px solid #eee;
         }
-        .modal-close {
-            position: absolute; top: 15px; left: 15px; background: transparent;
-            border: none; color: var(--neon-red); font-size: 24px; cursor: pointer;
+        .modal-header h2 { font-size: 16px; font-weight: 800; }
+        .close-modal { background: transparent; border: none; font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 20px; text-align: center; }
+        .modal-image { width: 100%; height: 350px; object-fit: contain; filter: drop-shadow(0 20px 20px rgba(0,0,0,0.1)); }
+        .modal-details { text-align: right; margin-top: 20px; }
+        .modal-details h3 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
+        .modal-details .modal-price { font-size: 18px; font-weight: bold; color: var(--text-muted); margin-bottom: 20px; }
+        .size-selector { margin-bottom: 20px; }
+        .size-selector label { font-size: 14px; font-weight: bold; display: block; margin-bottom: 10px; }
+        .size-btns { display: flex; gap: 10px; }
+        .size-btn {
+            flex: 1; padding: 12px; border: 1px solid #ddd; background: #fff;
+            border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;
         }
-        .modal-content h2 { color: var(--neon-red); margin-bottom: 15px; font-size: 24px; }
-        .modal-content p { color: #ccc; font-size: 15px; line-height: 1.8; margin-bottom: 10px; }
-        
+        .size-btn.active, .size-btn:hover { border-color: var(--accent-color); background: var(--accent-color); color: #fff; }
+        .add-to-cart-btn {
+            width: 100%; padding: 15px; background: var(--accent-color); color: #fff;
+            border: none; border-radius: 5px; font-size: 16px; font-weight: bold;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        }
+        .add-to-cart-btn:hover { background: #333; }
+
         /* =========================================
-           Hero & Products & Cart (نفس الكود السابق)
+           Cart Sidebar
            ========================================= */
-        .hero { text-align: center; padding: 40px 15px; background: radial-gradient(circle at center, rgba(255, 7, 58, 0.1) 0%, var(--dark-bg) 70%); }
-        .hero h1 { font-size: 32px; font-weight: 900; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255, 7, 58, 0.6); }
-        .hero p { font-size: 14px; color: var(--gray-text); }
-
-        .main-content { padding: 20px 15px; max-width: 1300px; margin: auto; }
-        .category-section { margin-bottom: 40px; }
-        .category-header { display: flex; align-items: center; margin-bottom: 20px; }
-        .category-title { font-size: 20px; font-weight: 700; margin-left: 10px; position: relative; }
-        .category-title::after { content: ''; position: absolute; bottom: -5px; right: 0; width: 50%; height: 2px; background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
-        .category-count { background: rgba(255, 7, 58, 0.1); color: var(--neon-red); padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid var(--neon-red); }
-
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .product-card { background: var(--card-bg); border-radius: 10px; overflow: hidden; border: 1px solid #222; transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .product-card:hover { border-color: var(--neon-red); box-shadow: 0 5px 15px rgba(255, 7, 58, 0.15); }
-        .product-image { width: 100%; height: 200px; object-fit: cover; }
-        .product-info { padding: 10px; text-align: right; display: flex; flex-direction: column; flex: 1; }
-        .product-info h3 { font-size: 14px; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .price { color: var(--neon-red); font-size: 14px; font-weight: bold; margin-bottom: 10px; margin-top: auto; }
-        .add-to-cart-btn { display: block; width: 100%; background: transparent; color: #fff; text-align: center; padding: 8px; font-size: 12px; border-radius: 5px; border: 1px solid #333; cursor: pointer; transition: all 0.3s; }
-        .add-to-cart-btn:hover { background: var(--neon-red); border-color: var(--neon-red); }
-
-        /* Cart Sidebar */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1000; display: none; opacity: 0; transition: opacity 0.3s; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1000; display: none; opacity: 0; transition: opacity 0.3s; }
         .cart-overlay.open { display: block; opacity: 1; }
-        .cart-sidebar { position: fixed; top: 0; right: -100%; width: 85%; max-width: 350px; height: 100vh; background: #111; z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
+        .cart-sidebar { position: fixed; top: 0; right: -100%; width: 85%; max-width: 350px; height: 100vh; background: #fff; z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
         .cart-sidebar.open { right: 0; }
-        .cart-header { padding: 15px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h2 { color: var(--neon-red); font-size: 18px; }
-        .close-cart { background: transparent; color: #fff; border: none; font-size: 24px; cursor: pointer; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
-        .cart-item { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; background: #1a1a1a; padding: 10px; border-radius: 8px; border: 1px solid #222; }
-        .cart-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h2 { font-size: 18px; font-weight: 800; }
+        .close-cart { background: transparent; color: #111; border: none; font-size: 24px; cursor: pointer; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .cart-item img { width: 60px; height: 60px; object-fit: contain; background: #f9f9f9; border-radius: 5px; }
         .cart-item-info { flex: 1; }
-        .cart-item-info h4 { font-size: 13px; margin-bottom: 3px; }
-        .cart-item-info p { color: var(--neon-red); font-size: 12px; font-weight: bold; }
-        .qty-controls { display: flex; align-items: center; gap: 5px; margin-top: 5px; }
-        .qty-controls button { background: #333; color: #fff; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        .qty-controls span { font-size: 13px; min-width: 15px; text-align: center; }
-        .remove-item { color: #ff304b; background: rgba(255, 48, 75, 0.1); border: none; padding: 5px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .cart-footer { padding: 15px; border-top: 1px solid #333; background: #0a0a0a; }
-        .total-price { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .checkout-btn { width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .cart-item-info h4 { font-size: 14px; margin-bottom: 3px; font-weight: 600; }
+        .cart-item-info p { color: var(--text-muted); font-size: 13px; font-weight: bold; }
+        .qty-controls { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+        .qty-controls button { background: #f0f0f0; color: #111; border: none; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .qty-controls span { font-size: 14px; font-weight: bold; }
+        .remove-item { color: #e74c3c; background: transparent; border: none; cursor: pointer; font-size: 18px; }
+        .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; }
+        .total-price { display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; margin-bottom: 15px; }
+        .checkout-btn { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .checkout-btn:hover { background: #128C7E; }
         .empty-cart-msg { text-align: center; color: #777; margin-top: 50px; font-size: 14px; }
 
         @media (min-width: 768px) {
-            .navbar { padding: 20px 40px; }
-            .logo { font-size: 28px; }
-            .hero h1 { font-size: 45px; }
-            .main-content { padding: 30px 40px; }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-            .product-image { height: 280px; }
-            .product-info h3 { font-size: 18px; }
-            .price { font-size: 16px; }
-            .add-to-cart-btn { padding: 10px; font-size: 14px; }
+            .navbar { padding: 20px 50px; }
+            .nav-links { display: flex; }
+            .hero h1 { font-size: 48px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+            .product-image { height: 300px; }
+            .product-modal { flex-direction: row; align-items: center; justify-content: center; }
+            .modal-body { display: flex; gap: 50px; text-align: right; padding: 50px; max-width: 1000px; }
+            .modal-image-container { width: 50%; }
+            .modal-image { height: 500px; }
+            .modal-details { width: 50%; margin-top: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
-        <div class="nav-left">
-            <button class="menu-btn" onclick="toggleMenu()">☰</button>
-            <div class="logo">SIX WEAR</div>
+        <div class="logo">SIX WEAR</div>
+        <div class="nav-links">
+            <a href="#">الرئيسية</a>
+            <a href="#">المنتجات</a>
+            <a href="#">تواصل معنا</a>
         </div>
-        <div class="nav-right">
+        <div class="nav-icons">
             <button class="cart-btn" onclick="toggleCart()">
-                🛒 السلة <span class="cart-count" id="cartCount">0</span>
+                🛒 <span class="cart-count" id="cartCount">0</span>
             </button>
         </div>
     </nav>
 
-    <!-- Sidebar Menu -->
-    <div class="sidebar-menu" id="sidebarMenu">
-        <div class="sidebar-header">
-            <h2>القائمة</h2>
-            <button class="close-menu" onclick="toggleMenu()">×</button>
-        </div>
-        <ul class="sidebar-links">
-            <li><a href="#" onclick="openModal('about')">ℹ️ عن SIX WEAR</a></li>
-            <li><a href="#" onclick="openModal('privacy')">🔒 سياسة الخصوصية</a></li>
-            <li><a href="#" onclick="openModal('return')">🔄 سياسة الاستبدال والاسترجاع</a></li>
-            <li><a href="#" onclick="openModal('contact')">📞 تواصل معنا</a></li>
-        </ul>
-    </div>
-
-    <!-- Hero -->
     <header class="hero">
-        <h1>اكتشف ستايلك</h1>
-        <p>أفضل تشكيلة ملابس في مصر. جودة، راحة، وتصميم عصري.</p>
+        <h1>NEW DROP.</h1>
+        <p>اكتشف تشكيلة SIX WEAR الجديدة. جودة عالية، تصميم عصري، وتجربة تسوق فريدة.</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content" id="mainContent"></main>
+    <main class="main-content">
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
 
-    <!-- Modals (النوافذ المنبثقة) -->
-    <!-- About Modal -->
-    <div class="modal-overlay" id="modal-about">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('about')">×</button>
-            <h2>عن SIX WEAR</h2>
-            <p>مرحباً بك في SIX WEAR، وجهتك الأولى لأحدث صيحات الموضة والأزياء العصرية (Streetwear) في مصر.</p>
-            <p>نحن نؤمن أن الأناقة هي أسلوب حياة. لذلك نحرص على تقديم قطع فريدة تجمع بين الجودة العالية والتصميم المريح لتناسب يومك.</p>
-            <p>كل قطعة في SIX WEAR تم اختيارها بعناية فائقة لتعكس شخصيتك وتبرز تميزك. تسوق الآن واستمتع بتجربة فريدة.</p>
+    <div class="product-modal" id="productModal">
+        <div class="modal-header">
+            <h2>تفاصيل المنتج</h2>
+            <button class="close-modal" onclick="closeProductModal()">×</button>
         </div>
-    </div>
+        <div class="modal-body">
+            <div class="modal-image-container">
+                <img src="" alt="" class="modal-image" id="modalImage">
+            </div>
+            <div class="modal-details">
+                <h3 id="modalTitle">اسم المنتج</h3>
+                <p class="modal-price" id="modalPrice">0 جنيه</p>
+                
+                <div class="size-selector">
+                    <label>المقاس</label>
+                    <div class="size-btns">
+                        <button class="size-btn" onclick="selectSize(this)">S</button>
+                        <button class="size-btn active" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    </div>
+                </div>
 
-    <!-- Privacy Modal -->
-    <div class="modal-overlay" id="modal-privacy">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('privacy')">×</button>
-            <h2>سياسة الخصوصية</h2>
-            <p>نحن في SIX WEAR نضع خصوصيتك في المقام الأول.</p>
-            <p>جميع البيانات التي تشاركها معنا (مثل الاسم، رقم الهاتف، والعنوان) تُستخدم فقط لتأكيد طلبك وتوصيله إليك بأمان.</p>
-            <p>نحن لا نشارك بياناتك مع أي طرف ثالث لأي أغراض تسويقية. جميع عمليات الطلب تتم عبر واتساب لضمان سرعة وسهولة التواصل.</p>
-        </div>
-    </div>
-
-    <!-- Return Modal -->
-    <div class="modal-overlay" id="modal-return">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('return')">×</button>
-            <h2>سياسة الاستبدال والاسترجاع</h2>
-            <p>يسعدنا دائماً رضاك عن مشترياتك من SIX WEAR.</p>
-            <p>يمكنك استبدال أو استرجاع أي منتج خلال <strong>14 يوماً</strong> من تاريخ الاستلام.</p>
-            <p>شروط الاستبدال:</p>
-            <ul style="color: #ccc; margin-right: 20px; margin-bottom: 10px; line-height: 1.8;">
-                <li>أن يكون المنتج بحالته الأصلية (غير مستخدم).</li>
-                <li>أن تكون جميع العلامات والملصقات الأصلية موجودة على المنتج.</li>
-                <li>في حالة وجود عيب في المنتج، يرجى التواصل معنا فوراً لتعويضك.</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Contact Modal -->
-    <div class="modal-overlay" id="modal-contact">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('contact')">×</button>
-            <h2>تواصل معنا</h2>
-            <p>نحن هنا لخدمتك والإجابة على أي استفسارات.</p>
-            <p>📞 يمكنك التواصل معنا مباشرة عبر واتساب عبر الرقم: <strong>01017351246</strong></p>
-            <p>أو من خلال صفحاتنا على منصات التواصل الاجتماعي:</p>
-            <div style="margin-top: 15px;">
-                <a href="#" style="color: var(--neon-red); text-decoration: none; margin-left: 10px;">إنستجرام</a>
-                <a href="#" style="color: var(--neon-red); text-decoration: none;">تيك توك</a>
+                <button class="add-to-cart-btn" id="modalAddBtn">أضف إلى السلة</button>
             </div>
         </div>
     </div>
 
-    <!-- Cart Sidebar -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            NEW DROPS • IT'S US NEVER THEM • LAGOS • NEW DROPS • IT'S US NEVER THEM • LAGOS • NEW DROPS • IT'S US NEVER THEM • LAGOS • 
+        </div>
+    </div>
+
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
@@ -267,76 +259,87 @@
         <div class="cart-footer">
             <div class="total-price">
                 <span>الإجمالي:</span>
-                <span id="cartTotal" style="color: var(--neon-red);">0 جنيه</span>
+                <span id="cartTotal">0 جنيه</span>
             </div>
             <button class="checkout-btn" onclick="checkout()">إتمام الطلب عبر واتساب</button>
         </div>
     </div>
 
     <script>
-        // =========================================
-        // 1. بيانات المنتجات
-        // =========================================
         const storeData = [
-            { categoryName: "هوديز (Hoodies)", products: [
-                { id: 1, name: "هودي أسود - SIX", price: 450, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000&auto=format&fit=crop" },
-                { id: 2, name: "هودي رمادي أوفر سايز", price: 500, image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1000&auto=format&fit=crop" },
-                { id: 3, name: "هودي أحمر", price: 480, image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=1000&auto=format&fit=crop" }
-            ]},
-            { categoryName: "تيشيرتات (T-Shirts)", products: [
-                { id: 4, name: "تيشيرت أبيض", price: 250, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1000&auto=format&fit=crop" },
-                { id: 5, name: "تيشيرت أسود", price: 250, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop" }
-            ]},
-            { categoryName: "بناطيل (Pants)", products: [
-                { id: 6, name: "بنطلون كارجو", price: 600, image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=1000&auto=format&fit=crop" },
-                { id: 7, name: "بنطلون جينز", price: 550, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1000&auto=format&fit=crop" }
-            ]}
+            { id: 1, name: "Distressed Painted Logo Tank Top", price: 450, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000&auto=format&fit=crop" },
+            { id: 2, name: "It's Us Never Them Tee", price: 350, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1000&auto=format&fit=crop" },
+            { id: 3, name: "Crimson Memory LS Shirt", price: 550, image: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?q=80&w=1000&auto=format&fit=crop" },
+            { id: 4, name: "Silicon Logo Print T-Shirt", price: 300, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop" }
         ];
 
         const phoneNumber = "201017351246"; 
-        const mainContent = document.getElementById('mainContent');
+        const productsGrid = document.getElementById('productsGrid');
         let cart = JSON.parse(localStorage.getItem('sixWearCart')) || [];
 
-        // =========================================
-        // 2. منطق القائمة الجانبية (Menu)
-        // =========================================
-        function toggleMenu() {
-            document.getElementById('sidebarMenu').classList.toggle('open');
+        // عرض المنتجات
+        storeData.forEach(product => {
+            const card = document.createElement('div');
+            card.classList.add('product-card');
+            
+            // 🔴 التعديل هنا: عند الضغط، بنشغل حركة التمايل الأول وبعدين نفتح المنتج
+            card.onclick = () => {
+                const img = card.querySelector('.product-image');
+                
+                // إضافة كلاس التمايل
+                img.classList.add('swing');
+                
+                // استنى الحركة تخلص (نص ثانية) وبعدين افتح المودال
+                setTimeout(() => {
+                    img.classList.remove('swing'); // شيل الكلاس عشان يشتغل تاني لو ضغطنا
+                    openProductModal(product); 
+                }, 400); 
+            };
+            
+            card.innerHTML = `
+                <div class="hanger-line"></div>
+                <div class="hanger-hook"></div>
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <p class="price">${product.price} جنيه</p>
+                </div>
+            `;
+            productsGrid.appendChild(card);
+        });
+
+        // المودال
+        function openProductModal(product) {
+            document.getElementById('modalImage').src = product.image;
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalPrice').innerText = product.price + " جنيه";
+            
+            document.getElementById('modalAddBtn').onclick = () => {
+                addToCart(product.id);
+                closeProductModal();
+                toggleCart();
+            };
+
+            document.getElementById('productModal').classList.add('open');
         }
 
-        // =========================================
-        // 3. منطق النوافذ المنبثقة (Modals)
-        // =========================================
-        function openModal(id) {
-            document.getElementById('modal-' + id).classList.add('open');
-            toggleMenu(); // نقفل القائمة الجانبية
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('open');
         }
 
-        function closeModal(id) {
-            document.getElementById('modal-' + id).classList.remove('open');
+        function selectSize(btn) {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
-        // قفل النافذة لو ضغطت برة
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('open');
-            }
-        }
-
-        // =========================================
-        // 4. منطق السلة (Cart)
-        // =========================================
+        // السلة
         function saveCart() {
             localStorage.setItem('sixWearCart', JSON.stringify(cart));
             updateCartUI();
         }
 
         function addToCart(productId) {
-            let product = null;
-            storeData.forEach(cat => {
-                const found = cat.products.find(p => p.id === productId);
-                if (found) product = found;
-            });
+            const product = storeData.find(p => p.id === productId);
             if (!product) return;
 
             const existingItem = cart.find(item => item.id === productId);
@@ -344,8 +347,6 @@
             else cart.push({ ...product, quantity: 1 });
             
             saveCart();
-            // تأثير بسيط إن المنتج اتضاف (اختياري)
-            toggleCart();
         }
 
         function changeQty(productId, change) {
@@ -395,7 +396,7 @@
                                     <button onclick="changeQty(${item.id}, 1)">+</button>
                                 </div>
                             </div>
-                            <button class="remove-item" onclick="removeItem(${item.id})">🗑️</button>
+                            <button class="remove-item" onclick="removeItem(${item.id})">×</button>
                         </div>
                     `;
                 });
@@ -418,37 +419,6 @@
             const whatsappLink = `intent://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
             window.location.href = whatsappLink;
         }
-
-        // =========================================
-        // 5. عرض المنتجات
-        // =========================================
-        storeData.forEach(category => {
-            const section = document.createElement('section');
-            section.classList.add('category-section');
-            section.innerHTML = `
-                <div class="category-header">
-                    <h2 class="category-title">${category.categoryName}</h2>
-                    <span class="category-count">${category.products.length} منتج</span>
-                </div>
-                <div class="products-grid"></div>
-            `;
-            mainContent.appendChild(section);
-            const grid = section.querySelector('.products-grid');
-            
-            category.products.forEach(product => {
-                const card = document.createElement('div');
-                card.classList.add('product-card');
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p class="price">${product.price} جنيه</p>
-                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">🛒 أضف للسلة</button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        });
 
         updateCartUI();
     </script>
