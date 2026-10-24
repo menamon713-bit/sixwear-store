@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIX WEAR | Premium Streetwear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-red: #ff073a;
+            --dark-bg: #050505;
+            --card-bg: #0d0d0d;
+            --gray-text: #888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           1. شاشة الافتتاح (Intro Splash Screen)
+           ========================================= */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-logo {
+            font-size: 60px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px var(--neon-red), 0 0 40px var(--neon-red);
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        .intro-loading {
+            margin-top: 30px;
+            width: 200px;
+            height: 3px;
+            background: #222;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .intro-loading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red);
+            animation: loadBar 2.5s ease-in-out forwards;
+        }
+
+        /* =========================================
+           Navbar & Hero
+           ========================================= */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(5, 5, 5, 0.9);
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        .contact-btn {
+            background: transparent;
+            color: #fff;
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--neon-red);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: var(--neon-red);
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: radial-gradient(circle at center, rgba(255, 7, 58, 0.1) 0%, var(--dark-bg) 70%);
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 7, 58, 0.6);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--gray-text);
+        }
+
+        /* =========================================
+           المنتجات والأقسام (Categories)
+           ========================================= */
+        .main-content {
+            padding: 40px 40px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .category-section {
+            margin-bottom: 80px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-left: 15px;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red);
+        }
+
+        /* شكل عداد المنتجات (نيون بادج) */
+        .category-count {
+            background: rgba(255, 7, 58, 0.1);
+            color: var(--neon-red);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 7, 58, 0.3) inset;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-red);
+            box-shadow: 0 10px 30px rgba(255, 7, 58, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 15px;
+            text-align: right;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .price {
+            color: var(--neon-red);
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .order-btn {
+            display: block;
+            width: 100%;
+            background: transparent;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover .order-btn {
+            background: var(--neon-red);
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        /* =========================================
+           أنيميشن النزول (Scroll Reveal)
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #000;
+            color: #555;
+            border-top: 1px solid #111;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); text-shadow: 0 0 20px var(--neon-red); }
+            100% { transform: scale(1.05); text-shadow: 0 0 40px var(--neon-red), 0 0 60px var(--neon-red); }
+        }
+
+        @keyframes loadBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .hero h1 { font-size: 35px; }
+            .main-content { padding: 20px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .product-image { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. شاشة الافتتاح -->
+    <div id="intro-screen">
+        <div class="intro-logo">SIX WEAR</div>
+        <div class="intro-loading"></div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="logo">SIX WEAR</div>
+        <a href="intent://send?phone=201017351246#Intent;scheme=whatsapp;package=com.whatsapp;end" target="_blank" class="contact-btn">تواصل معنا</a>
+    </nav>
+
+    <!-- الترحيب -->
+    <header class="hero">
+        <h1>اكتشف ستايلك</h1>
+        <p>أفضل تشكيلة ملابس في مصر. جودة، راحة، وتصميم عصري.</p>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content" id="mainContent">
+        <!-- سيتم إضافة الأقسام هنا عبر الجافاسكريبت -->
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; SIX WEAR 2026</p>
+    </footer>
+
+    <script>
+        // 1. كود شاشة الافتتاح
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const intro = document.getElementById('intro-screen');
+                intro.classList.add('hidden');
+            }, 3000);
+        });
+
+        // 2. بيانات المنتجات (تقدر تزود أو تقلل منتجات هنا)
+        const storeData = [
+            {
+                categoryName: "هوديز (Hoodies)",
+                products: [
+                    { id: 1, name: "هودي أسود - SIX", price: "450 جنيه", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000&auto=format&fit=crop" },
+                    { id: 2, name: "هودي رمادي أوفر سايز", price: "500 جنيه", image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1000&auto=format&fit=crop" },
+                    { id: 3, name: "هودي أحمر", price: "480 جنيه", image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=1000&auto=format&fit=crop" }
+                ]
+            },
+            {
+                categoryName: "تيشيرتات (T-Shirts)",
+                products: [
+                    { id: 4, name: "تيشيرت أبيض", price: "250 جنيه", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1000&auto=format&fit=crop" },
+                    { id: 5, name: "تيشيرت أسود", price: "250 جنيه", image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop" }
+                ]
+            },
+            {
+                categoryName: "بناطيل (Pants)",
+                products: [
+                    { id: 6, name: "بنطلون كارجو", price: "600 جنيه", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=1000&auto=format&fit=crop" },
+                    { id: 7, name: "بنطلون جينز", price: "550 جنيه", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1000&auto=format&fit=crop" }
+                ]
+            }
+        ];
+
+        const phoneNumber = "201017351246"; 
+        const mainContent = document.getElementById('mainContent');
+
+        // 3. بناء الأقسام والعدادات
+        storeData.forEach(category => {
+            const section = document.createElement('section');
+            section.classList.add('category-section', 'reveal');
+
+            const productCount = category.products.length;
+
+            section.innerHTML = `
+                <div class="category-header">
+                    <h2 class="category-title">${category.categoryName}</h2>
+                    <span class="category-count">${productCount} منتج</span>
+                </div>
+                <div class="products-grid" id="grid-${category.categoryName}">
+                    <!-- المنتجات هتتحط هنا -->
+                </div>
+            `;
+
+            mainContent.appendChild(section);
+            const grid = section.querySelector('.products-grid');
+            
+            category.products.forEach(product => {
+                const message = `مرحباً SIX WEAR، أنا عايز أطلب المنتج ده: ${product.name} - السعر: ${product.price}`;
+                // 🔴 هنا استخدمنا intent:// لتحديد تطبيق واتساب الأصلي
+                const whatsappLink = `intent://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+
+                const card = document.createElement('div');
+                card.classList.add('product-card');
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="price">${product.price}</p>
+                        <a href="${whatsappLink}" target="_blank" class="order-btn">اطلب الآن</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+
+        // 4. أنيميشن النزول
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target); 
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
