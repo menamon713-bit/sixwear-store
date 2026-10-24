@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 🔴 الألوان الجديدة: أسود وأحمر نيون */
             --bg-color: #050505;
             --text-main: #ffffff;
             --text-muted: #888888;
@@ -62,7 +61,7 @@
         .product-card {
             background: var(--card-bg); border-radius: 8px; overflow: hidden;
             cursor: pointer; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease;
-            padding-bottom: 15px; border: 1px solid var(--border-color);
+            padding: 15px 0; border: 1px solid var(--border-color);
         }
         .product-card:hover {
             transform: translateY(-5px);
@@ -70,18 +69,13 @@
             border-color: rgba(255, 7, 58, 0.3);
         }
 
-        /* العلاقة */
-        .hanger-line { width: 2px; height: 20px; background: #444; margin: auto; }
-        .hanger-hook {
-            width: 10px; height: 10px; border: 2px solid #444;
-            border-bottom: none; border-radius: 10px 10px 0 0;
-            margin: -2px auto 0; display: block;
-        }
+        /* 🔴 تم إزالة خط العلاقة من هنا */
 
         .product-image {
             width: 90%; height: 220px; object-fit: contain;
-            margin: 10px auto; display: block;
+            margin: 0 auto 15px; display: block;
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.5));
+            /* بنخلي نقطة الارتكاز من فوق عشان تتمايل زي المعلقة */
             transform-origin: top center; 
         }
 
@@ -285,6 +279,7 @@
             const card = document.createElement('div');
             card.classList.add('product-card');
             
+            // 🔴 عند الضغط على المنتج، حركة التمايل بتشتغل الأول، وبعدين صفحة المنتج تفتح
             card.onclick = () => {
                 const img = card.querySelector('.product-image');
                 img.classList.add('swing');
@@ -296,8 +291,6 @@
             };
             
             card.innerHTML = `
-                <div class="hanger-line"></div>
-                <div class="hanger-hook"></div>
                 <img src="${product.image}" alt="${product.name}" class="product-image">
                 <div class="product-info">
                     <h3>${product.name}</h3>
