@@ -7,75 +7,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ألوان الصورة بالظبط (فاتح + نيون أخضر) */
-            --bg-color: #f4f4f4;
-            --text-main: #000;
+            /* ألوان مطابقة للصورة (خلفية فاتحة، شريط نيون أخضر) */
+            --bg-color: #f5f5f5;
+            --text-main: #111;
             --text-muted: #666;
-            --accent-color: #000;
+            --accent-color: #111;
             --marquee-bg: #ccff00; 
             --marquee-text: #000;
-            --rod-color: #b0b0b0;
+            --rod-color: #bbb;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; }
 
         /* =========================================
-           Navbar
+           Navbar (شريط علوي بسيط)
            ========================================= */
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 30px; background-color: var(--bg-color);
+            padding: 20px 30px; background-color: transparent;
             position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid #ddd;
         }
-        .logo { font-size: 20px; font-weight: 900; letter-spacing: 2px; }
-        .nav-links { display: none; gap: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+        .logo { font-size: 20px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
+        .nav-links { display: none; gap: 25px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
         .nav-links a { text-decoration: none; color: var(--text-main); transition: 0.3s; }
         .nav-links a:hover { color: var(--text-muted); }
         
         .nav-icons { display: flex; align-items: center; gap: 15px; font-size: 18px; }
-        .cart-btn { background: transparent; border: none; cursor: pointer; font-size: 18px; position: relative; display: flex; align-items: center; }
-        .cart-count { background: #000; color: #fff; font-size: 10px; border-radius: 50%; padding: 2px 6px; position: absolute; top: -5px; right: -10px; font-weight: bold; }
+        .cart-btn { background: transparent; border: none; cursor: pointer; font-size: 18px; position: relative; display: flex; align-items: center; color: #111; }
+        .cart-count { background: #111; color: #fff; font-size: 10px; border-radius: 50%; padding: 2px 6px; position: absolute; top: -5px; right: -10px; font-weight: bold; }
 
         /* =========================================
-           Hero (العنوان)
+           Hero (عنوان بسيط)
            ========================================= */
-        .hero { text-align: center; padding: 40px 20px 20px; }
-        .hero h1 { font-size: 24px; font-weight: 800; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .hero p { font-size: 12px; color: var(--text-muted); }
+        .hero { text-align: center; padding: 20px 20px 10px; }
+        .hero h1 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #111; }
 
         /* =========================================
-           🚨 المعرض الأفقي (الحديدة والهدوم)
+           🚨 المعرض الأفقي (الحديدة الطويلة)
            ========================================= */
-        .rack-wrapper {
+        .rack-container {
             position: relative;
             width: 100%;
-            padding-top: 60px; /* مساحة للحديدة */
+            padding: 60px 0 40px;
             overflow-x: auto; /* سكرول أفقي */
             overflow-y: hidden;
-            white-space: nowrap;
             scrollbar-width: none; /* اخفاء شريط التمرير */
         }
-        .rack-wrapper::-webkit-scrollbar { display: none; }
+        .rack-container::-webkit-scrollbar { display: none; }
 
-        /* الحديدة */
+        /* الحديدة الطويلة */
         .rack-rod {
             position: absolute;
-            top: 40px;
+            top: 50px; /* مكان الحديدة */
             left: 0;
             width: 100%;
-            min-width: max-content; /* عشان تمتد مع الهدوم */
-            height: 4px;
-            background: linear-gradient(to bottom, #ccc, #999, #ccc);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 2px;
+            background-color: var(--rod-color);
             z-index: 1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .rack-scroll {
             display: flex;
-            gap: 40px;
-            padding: 0 40px 30px;
+            gap: 30px;
+            padding: 0 40px;
             position: relative;
             z-index: 2;
             width: max-content;
@@ -91,11 +87,11 @@
             position: relative;
         }
 
-        /* العلاقة (الخطاف) */
+        /* العلاقة (الخطاف المربوط في الحديدة) */
         .hanger-hook {
             width: 2px;
-            height: 30px;
-            background: #666;
+            height: 25px;
+            background: #888;
             position: relative;
             margin-bottom: -5px;
         }
@@ -103,10 +99,10 @@
             content: '';
             position: absolute;
             top: -15px;
-            left: -10px;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #666;
+            left: -9px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #888;
             border-bottom: none;
             border-radius: 20px 20px 0 0;
         }
@@ -116,7 +112,7 @@
             width: 100%;
             height: 300px;
             object-fit: contain;
-            /* دمج الصورة مع الخلفية عشان تبان شفافة */
+            /* دمج الصورة مع الخلفية عشان تبان شفافة ومعلقة */
             mix-blend-mode: multiply; 
             transform-origin: top center; 
             transition: transform 0.3s;
@@ -135,9 +131,9 @@
             100% { transform: rotate(0deg); }
         }
 
-        .product-info { text-align: center; margin-top: 15px; }
-        .product-info h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
-        .price { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .product-info { text-align: center; margin-top: 10px; }
+        .product-info h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
+        .price { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
         /* =========================================
            Marquee (الشريط الأخضر)
@@ -145,7 +141,7 @@
         .marquee-container {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background-color: var(--marquee-bg); color: var(--marquee-text);
-            padding: 8px 0; overflow: hidden; z-index: 999;
+            padding: 10px 0; overflow: hidden; z-index: 999;
             font-weight: 800; font-size: 12px; letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -156,7 +152,7 @@
         }
 
         /* =========================================
-           Product Modal (صفحة المنتج)
+           Product Modal
            ========================================= */
         .product-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -168,26 +164,26 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px; border-bottom: 1px solid #ddd;
         }
-        .modal-header h2 { font-size: 14px; font-weight: 800; }
-        .close-modal { background: transparent; border: none; font-size: 24px; cursor: pointer; color: #000; }
+        .modal-header h2 { font-size: 14px; font-weight: 800; text-transform: uppercase; }
+        .close-modal { background: transparent; border: none; font-size: 24px; cursor: pointer; color: #111; }
         .modal-body { padding: 20px; text-align: center; }
         .modal-image { width: 100%; height: 350px; object-fit: contain; mix-blend-mode: multiply; }
         .modal-details { text-align: right; margin-top: 20px; }
-        .modal-details h3 { font-size: 18px; font-weight: 800; margin-bottom: 5px; text-transform: uppercase; }
-        .modal-details .modal-price { font-size: 16px; font-weight: bold; color: var(--text-muted); margin-bottom: 20px; }
+        .modal-details h3 { font-size: 16px; font-weight: 800; margin-bottom: 5px; text-transform: uppercase; }
+        .modal-details .modal-price { font-size: 14px; font-weight: bold; color: var(--text-muted); margin-bottom: 20px; }
         
         .size-selector { margin-bottom: 20px; }
-        .size-selector label { font-size: 12px; font-weight: bold; display: block; margin-bottom: 10px; }
+        .size-selector label { font-size: 12px; font-weight: bold; display: block; margin-bottom: 10px; text-transform: uppercase; }
         .size-btns { display: flex; gap: 10px; }
         .size-btn {
             flex: 1; padding: 10px; border: 1px solid #ccc; background: transparent;
-            color: #000; border-radius: 0; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 12px;
+            color: #111; border-radius: 0; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 12px;
         }
-        .size-btn.active, .size-btn:hover { border-color: #000; background: #000; color: #fff; }
+        .size-btn.active, .size-btn:hover { border-color: #111; background: #111; color: #fff; }
         
         .add-to-cart-btn {
-            width: 100%; padding: 15px; background: #000; color: #fff;
-            border: none; border-radius: 0; font-size: 14px; font-weight: bold;
+            width: 100%; padding: 15px; background: #111; color: #fff;
+            border: none; border-radius: 0; font-size: 13px; font-weight: bold;
             cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
         .add-to-cart-btn:hover { background: #333; }
@@ -200,21 +196,21 @@
         .cart-sidebar { position: fixed; top: 0; right: -100%; width: 85%; max-width: 350px; height: 100vh; background: #fff; z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
         .cart-sidebar.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h2 { font-size: 16px; font-weight: 800; }
-        .close-cart { background: transparent; color: #000; border: none; font-size: 24px; cursor: pointer; }
+        .cart-header h2 { font-size: 14px; font-weight: 800; text-transform: uppercase; }
+        .close-cart { background: transparent; color: #111; border: none; font-size: 24px; cursor: pointer; }
         .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
         .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .cart-item img { width: 60px; height: 60px; object-fit: contain; background: #f9f9f9; border-radius: 5px; mix-blend-mode: multiply; }
+        .cart-item img { width: 60px; height: 60px; object-fit: contain; background: #f9f9f9; mix-blend-mode: multiply; }
         .cart-item-info { flex: 1; }
         .cart-item-info h4 { font-size: 12px; margin-bottom: 3px; font-weight: 600; text-transform: uppercase; }
         .cart-item-info p { color: var(--text-muted); font-size: 12px; font-weight: bold; }
         .qty-controls { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
-        .qty-controls button { background: #f0f0f0; color: #000; border: none; width: 25px; height: 25px; border-radius: 0; cursor: pointer; font-weight: bold; }
+        .qty-controls button { background: #f0f0f0; color: #111; border: none; width: 25px; height: 25px; border-radius: 0; cursor: pointer; font-weight: bold; }
         .qty-controls span { font-size: 12px; font-weight: bold; }
         .remove-item { color: #e74c3c; background: transparent; border: none; cursor: pointer; font-size: 18px; }
         .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; }
-        .total-price { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; margin-bottom: 15px; }
-        .checkout-btn { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 0; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .total-price { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+        .checkout-btn { width: 100%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 0; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .checkout-btn:hover { background: #128C7E; }
         .empty-cart-msg { text-align: center; color: #777; margin-top: 50px; font-size: 14px; }
 
@@ -222,7 +218,7 @@
         @media (min-width: 768px) {
             .navbar { padding: 20px 50px; }
             .nav-links { display: flex; }
-            .hero h1 { font-size: 32px; }
+            .hero h1 { font-size: 16px; }
             .product-modal { flex-direction: row; align-items: center; justify-content: center; }
             .modal-body { display: flex; gap: 50px; text-align: right; padding: 50px; max-width: 1000px; }
             .modal-image-container { width: 50%; }
@@ -249,11 +245,10 @@
 
     <header class="hero">
         <h1>IT'S US NEVER THEM.</h1>
-        <p>Discover the new collection.</p>
     </header>
 
     <!-- المعرض الأفقي -->
-    <div class="rack-wrapper">
+    <div class="rack-container">
         <div class="rack-rod"></div>
         <div class="rack-scroll" id="productsGrid">
             <!-- المنتجات هتتحط هنا عن طريق الجافاسكريبت -->
@@ -314,12 +309,12 @@
     </div>
 
     <script>
-        // صور الهدوم (حاولت أجيب صور شفافة أو فاتحة عشان تدمج مع الخلفية)
+        // صور الهدوم (يفضل تكون صور PNG بخلفية شفافة عشان تطلع زي الصورة)
         const storeData = [
-            { id: 1, name: "Distressed Painted Tank", price: 450, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop" },
+            { id: 1, name: "Distressed Painted Tank Top", price: 450, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop" },
             { id: 2, name: "It's Us Never Them Tee", price: 350, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=600&auto=format&fit=crop" },
-            { id: 3, name: "Crimson Memory LS", price: 550, image: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?q=80&w=600&auto=format&fit=crop" },
-            { id: 4, name: "Silicon Logo Tee", price: 300, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop" }
+            { id: 3, name: "Crimson Memory LS Shirt", price: 550, image: "https://images.unsplash.com/photo-1596755094514-f87e32f85e2c?q=80&w=600&auto=format&fit=crop" },
+            { id: 4, name: "Silicon Logo Print T-Shirt", price: 300, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop" }
         ];
 
         const phoneNumber = "201017351246"; 
